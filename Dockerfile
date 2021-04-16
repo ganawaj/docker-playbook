@@ -1,8 +1,22 @@
 FROM ubuntu
 
 RUN apt update -y
-RUN apt install curl ansible iputils-ping openssh-client -y
-RUN apt install git unzip -y 
+RUN apt-get install curl ansible iputils-ping openssh-client -y
+RUN apt-get install git unzip -y 
+
+RUN curl --silent --remote-name https://releases.hashicorp.com/vault/1.5.5/vault_1.5.5_linux_amd64.zip
+
+RUN unzip vault_1.5.5_linux_amd64.zip
+RUN chown root:root vault
+RUN mv vault /usr/local/bin/
+
+# RUN apt-get install gnupg2 -y
+# RUN apt-get install software-properties-common -y
+
+# RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+# RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+# RUN apt-get install vault -y
+
 # RUN \
 #   apt install \
 #     curl \
