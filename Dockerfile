@@ -32,6 +32,8 @@ RUN echo "[local]" >> /etc/ansible/hosts && \
 #   rm -fr ansible.tar.gz /ansible/docs /ansible/examples /ansible/packaging
 
 RUN mkdir -p /ansible/playbooks
+RUN mkdir /ansible/playbooks/roles
+
 WORKDIR /ansible/playbooks
 
 ENV ANSIBLE_GATHERING smart
