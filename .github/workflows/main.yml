@@ -103,7 +103,7 @@ jobs:
         with:
           user: ganawa
           slug: ganawa/ansible_playbook
-          pass: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          pass: ${{ secrets.DOCKER_HUB_PASS }}
           description: true
 
       -  name: Image digest
