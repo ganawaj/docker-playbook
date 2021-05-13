@@ -1,5 +1,18 @@
 #! /bin/bash
+
+# Stop on errors 
 set -e
+
+#! /bin/bash
+
+[[ -f /root/.ssh/id_rsa ]] && chmod 600 /root/.ssh/id_rsa
+[[ -f /root/.ssh/id_rsa.pub ]] && chmod 644 /root/.ssh/id_rsa.pub
+
+if [[ -f /ansible/playbooks/roles/requirements.yml ]]; then
+
+    echo "requirements.yml found - installing roles"
+    ansible-galaxy install -r /ansible/playbooks/roles/requirements.yml
+fi
 
 if [[ -f "/.vault-token" ]]; then
 
@@ -9,7 +22,7 @@ if [[ -f "/.vault-token" ]]; then
 
 else
 
-    exit 1
+    echo "No Vault token found. Populate /.vault-token to use vault token authentication."
 
 fi
 
