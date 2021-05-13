@@ -99,5 +99,12 @@ jobs:
           # GitHub Token used to authenticate against a repository for Git context
           # github-token: # optional, default is ${{ github.token }}
       
+      - uses: meeDamian/sync-readme@v1.0.6
+        with:
+          user: ganawa
+          slug: ganawa/ansible_playbook
+          pass: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          description: true
+
       -  name: Image digest
          run: echo ${{ steps.docker_build.outputs.digest }}   
