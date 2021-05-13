@@ -25,6 +25,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Docker Login
         # You may pin to the exact commit or the version.
         # uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
@@ -49,11 +61,11 @@ jobs:
           # List of build-time variables
           # build-args: # optional
           # Builder instance
-          # builder: # optional
+          builder: ${{ steps.buildx.outputs.name }}
           # List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
-          # cache-from: # optional
+          cache-from: type=local,src=/tmp/.buildx-cache
           # List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
-          # cache-to: # optional
+          cache-to: type=local,dest=/tmp/.buildx-cache
           # Build's context is the set of files located in the specified PATH or URL
           context: ./
           # Path to the Dockerfile
@@ -86,13 +98,6 @@ jobs:
           # target: # optional
           # GitHub Token used to authenticate against a repository for Git context
           # github-token: # optional, default is ${{ github.token }}
-          
-      # Runs a single command using the runners shell
-#       - name: Run a one-line script
-#         run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-#       - name: Run a multi-line script
-#         run: |
-#           echo Add other actions to build,
-#           echo test, and deploy your project.
+      
+      -  name: Image digest
+         run: echo ${{ steps.docker_build.outputs.digest }}   
