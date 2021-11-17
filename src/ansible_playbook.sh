@@ -1,12 +1,7 @@
-#! /bin/bash
+#! /bin/sh
 
-# Stop on errors 
+# Stop on errors
 set -e
-
-#! /bin/bash
-
-[[ -f /root/.ssh/id_rsa ]] && chmod 600 /root/.ssh/id_rsa
-[[ -f /root/.ssh/id_rsa.pub ]] && chmod 644 /root/.ssh/id_rsa.pub
 
 if [[ -f /ansible/playbooks/roles/requirements.yml ]]; then
 
@@ -27,4 +22,3 @@ else
 fi
 
 ansible-playbook "$@"
-

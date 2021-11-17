@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM alpine
 
 ENV ANSIBLE_GATHERING smart
 ENV ANSIBLE_HOST_KEY_CHECKING false
@@ -10,42 +10,22 @@ ENV PYTHONPATH /ansible/lib
 
 ENV VAULT_ADDR=''
 
-ARG VAULT_VERSION='1.5.5'
+RUN apk add --update curl iputils openssh git unzip py3-pip && \
+    apk add --update ansible && \
+    apk add --update jo jq libcap-dev tar
 
-RUN apt update -y
-RUN apt-get install curl ansible iputils-ping openssh-client -y
-RUN apt-get install git unzip -y 
+RUN apk add --update vault
 
-# Vault & JQ.
-RUN \
-  apt-get update && \
-  apt-get install -y \
-    jo \
-    jq \
-    libcap-dev \
-    tar
-
-RUN \ 
-  curl --silent --remote-name https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
-  unzip vault_${VAULT_VERSION}_linux_amd64.zip && \
-  chown root:root vault && \ 
-  mv vault /usr/local/bin/
+RUN pip install docker
 
 COPY ./src/ansible_playbook.sh /root/ansible_playbook.sh
 RUN chmod +x /root/ansible_playbook.sh
 
-RUN mkdir /ansible
+RUN mkdir -p /ansible/playbooks/roles && \
+    mkdir -p /etc/ansible
+
 RUN echo "[local]" >> /etc/ansible/hosts && \
     echo "localhost" >> /etc/ansible/hosts
-
-RUN mkdir -p /ansible/playbooks
-RUN mkdir /ansible/playbooks/roles
-
-# Cleanup.
-RUN \
-  apt-get clean && \
-  rm -fr /var/lib/apt/lists/* && \
-  rm -fr /tmp/*
 
 # Avoid hostkey error for git cloning by using:
 #   ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
