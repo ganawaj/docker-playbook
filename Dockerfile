@@ -14,7 +14,8 @@ RUN apk add --update curl iputils openssh git unzip py3-pip && \
     apk add --update ansible && \
     apk add --update jo jq libcap-dev tar
 
-RUN apk add --update vault
+RUN apk add --update vault libcap
+RUN setcap cap_ipc_lock= /usr/sbin/vault
 
 RUN pip install docker
 
