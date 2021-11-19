@@ -8,7 +8,7 @@ ENV ANSIBLE_SSH_PIPELINING True
 ENV PATH /ansible/bin:$PATH
 ENV PYTHONPATH /ansible/lib
 
-RUN apk add --update bash curl iputils openssh git unzip py3-pip && \
+RUN apk add --update curl iputils openssh git unzip py3-pip && \
     apk add --update ansible && \
     apk add --update jo jq libcap-dev tar
 
