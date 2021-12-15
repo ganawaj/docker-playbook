@@ -9,6 +9,12 @@ if [ -f /ansible/playbooks/roles/requirements.yml ]; then
     ansible-galaxy install -r /ansible/playbooks/roles/requirements.yml
 fi
 
+if [ -f /ansible/playbooks/requirements.yml ]; then
+
+    echo "requirements.yml found - installing roles"
+    ansible-galaxy install -r /ansible/playbooks/requirements.yml
+fi
+
 if [[ -z "${VAULT_TOKEN}" ]]; then
     echo "No vault token found. Please set VAULT_TOKEN env to use ssh certificate signing"
 else
