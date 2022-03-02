@@ -36,9 +36,8 @@ _Note: This example assumes the playbook name is `playbook.yml` and the server t
 docker run --rm \
   -v "${HOME}/.vault-token:/.vault-token" \
   -v "$(pwd)/test:/ansible/playbooks" \
-  ganawa/ansible_playbook:latest -- \
-  -i "server1," \
-  playbook.yml
+  ganawa/ansible_playbook:latest playbook.yml \
+  -i "server1,"
 ```
 
 Alternatively:
@@ -47,9 +46,8 @@ Alternatively:
 docker run --rm \
   -e VAULT_TOKEN=KLSJDLKSJD...
   -v "$(pwd)/test:/ansible/playbooks" \
-  ganawa/ansible_playbook:latest -- \
-  -i "server1," \
-  playbook.yml
+  ganawa/ansible_playbook:latest playbook.yml \
+  -i "server1,"
 ```
 
 ### No certificate signing
@@ -62,9 +60,8 @@ docker run --rm
   -e USE_CERT_SIGNING=0 \
   -e B64_ID_RSA="cHJpdmF0ZWtleQo=" \
   -v "$(pwd)/test:/ansible/playbooks" \
-  ganawa/ansible_playbook:latest -- \
-  -i "server1," \
-  playbook.yml
+  ganawa/ansible_playbook:latest playbook.yml \
+  -i "server1,"
 ```
 
 Alternatively:
@@ -74,7 +71,6 @@ docker run --rm
   -e USE_CERT_SIGNING=0 \
   -v "~/.ssh/id_rsa:/root/.ssh/id_rsa" \
   -v "$(pwd)/test:/ansible/playbooks" \
-  ganawa/ansible_playbook:latest -- \
-  -i "server1," \
-  playbook.yml
+  ganawa/ansible_playbook:latest playbook.yml \
+  -i "server1,"
 ```
