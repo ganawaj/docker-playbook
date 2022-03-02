@@ -40,7 +40,12 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/ansible_playbook:develop
-            ${{ secrets.DOCKER_HUB_USERNAME }}/ansible_playbook:${{ github.sha}}
-            ghcr.io/${{ github.repository_owner }}/docker-playbook:develop
-            ghcr.io/${{ github.repository_owner }}/docker-playbook:${{ github.sha}}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/ansible-playbook:develop
+            ghcr.io/${{ github.repository_owner }}/ansible-playbook:develop
+
+      - uses: meeDamian/sync-readme@v1.0.6
+        with:
+          user: ganawa
+          slug: ganawa/ansible-playbook
+          pass: ${{ secrets.DOCKER_HUB_PASS }}
+          description: true
