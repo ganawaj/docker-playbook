@@ -1,4 +1,4 @@
-name: Publish development images
+name: Publish tag release images
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  stage:
+  build:
     runs-on: ubuntu-latest
     steps:
 
