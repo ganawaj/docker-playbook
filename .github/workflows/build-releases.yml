@@ -16,6 +16,9 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v2
 
+      - name: Get tag release name
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
       - name: Docker Login
         uses: docker/login-action@v1
         with:
@@ -41,8 +44,8 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/ansible-playbook:${{ github.GITHUB_REF_NAME }}
-            ghcr.io/${{ github.repository_owner }}/ansible-playbook:${{ github.GITHUB_REF_NAME }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/ansible-playbook:${{ env.RELEASE_VERSION }}
+            ghcr.io/${{ github.repository_owner }}/ansible-playbook:${{ env.RELEASE_VERSION }}
 
       - uses: meeDamian/sync-readme@v1.0.6
         with:
