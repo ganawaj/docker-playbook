@@ -1,7 +1,5 @@
 FROM alpine
 
-ARG ANSIBLE_VERSION
-
 ENV ANSIBLE_GATHERING smart
 ENV ANSIBLE_HOST_KEY_CHECKING false
 ENV ANSIBLE_RETRY_FILES_ENABLED false
@@ -13,6 +11,9 @@ ENV PYTHONPATH /ansible/lib
 COPY ./src/ansible_playbook.sh /root/ansible_playbook.sh
 
 RUN \
+    # add apk edge community repo
+    echo '@edge https://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories && \
+    apk update && \
     # install ansible and dependencies
     apk add --update curl iputils openssh git unzip py3-pip && \
     apk add --update ansible=$ANSIBLE_VERSION && \
