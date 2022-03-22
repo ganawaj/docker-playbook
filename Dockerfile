@@ -1,5 +1,7 @@
 FROM alpine
 
+ARG ANSIBLE_VERSION
+
 ENV ANSIBLE_GATHERING smart
 ENV ANSIBLE_HOST_KEY_CHECKING false
 ENV ANSIBLE_RETRY_FILES_ENABLED false
@@ -9,7 +11,7 @@ ENV PATH /ansible/bin:$PATH
 ENV PYTHONPATH /ansible/lib
 
 RUN apk add --update curl iputils openssh git unzip py3-pip && \
-    apk add --update ansible && \
+    apk add --update ansible=$ANSIBLE_VERSION && \
     apk add --update jo jq libcap-dev tar
 
 RUN apk add --update vault libcap
