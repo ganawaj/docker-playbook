@@ -16,7 +16,7 @@ RUN \
     apk update && \
     # install ansible and dependencies
     apk add --update curl iputils openssh git unzip py3-pip && \
-    apk add --update ansible=$ANSIBLE_VERSION && \
+    apk add --update ansible && \
     apk add --update jo jq libcap-dev tar && \
     # install vault and dependencies
     apk add --update vault libcap && \
