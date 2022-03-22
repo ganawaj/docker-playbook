@@ -1,7 +1,7 @@
 name: Publish development images
 
-env:
-  ANSIBLE_VERSION: 4.8.0-r0
+# env:
+#   ANSIBLE_VERSION: 4.8.0-r0
 
 on:
   push:
@@ -42,8 +42,8 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          build-args: |
-            ANSIBLE_VERSION=${{ env.ANSIBLE_VERSION }}
+          # build-args: |
+          #   ANSIBLE_VERSION=${{ env.ANSIBLE_VERSION }}
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/ansible-playbook:latest
             ghcr.io/${{ github.repository_owner }}/ansible-playbook:latest
